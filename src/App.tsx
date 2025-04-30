@@ -11,21 +11,21 @@ function App() {
     const [ffmpeg] = createSignal(new FFmpeg())
     const [progress, setProgress] = createSignal<number>(1)
 
-    const baseURL = '/@ffmpeg/core/dist/umd'
+    const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-mt@0.12.9/dist/esm'
 
     createEffect(async () => {
         ffmpeg().on('progress', (message: ProgressEvent) => {
             console.log(message)
             setProgress(Number(message.progress.toFixed(2)))
         })
-        await ffmpeg().load({
-            coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-            wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
-            workerURL: await toBlobURL(`${baseURL}/ffmpeg-core.worker.js`, 'text/javascript')
-            // coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-            // wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
-            // workerURL: await toBlobURL(`${baseURL}/ffmpeg-core.worker.js`, 'text/javascript'),
-        })
+         await ffmpeg().load({
+             coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+             wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+             workerURL: await toBlobURL(`${baseURL}/ffmpeg-core.worker.js`, 'text/javascript')
+             // coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+             // wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+             // workerURL: await toBlobURL(`${baseURL}/ffmpeg-core.worker.js`, 'text/javascript'),
+         })
     }, [])
 
     const handleFileChange = (event: Event) => {
