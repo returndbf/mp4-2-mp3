@@ -34,7 +34,7 @@ function App() {
         const files = target.files!;
         const nameWithoutExtension = files[0].name.substring(0, files[0].name.lastIndexOf('.'));
         setFileName(nameWithoutExtension);
-        console.log(files[0])
+        console.log(nameWithoutExtension)
         setFile(files[0])
     };
 
@@ -43,8 +43,8 @@ function App() {
             return
         }
         await ffmpeg().writeFile("video.mp4", await fetchFile(file()));
-        await ffmpeg().exec(["-i", "video.mp4", `${file()?.name}.mp3`]);
-        const fileData = await ffmpeg().readFile(`${fileName}.mp3`);
+        await ffmpeg().exec(["-i", "video.mp4", `${fileName()}.mp3`]);
+        const fileData = await ffmpeg().readFile(`${fileName()}.mp3`);
         const data = new Uint8Array(fileData as ArrayBuffer);
         console.log(data);
         // const uint8Array = new Uint8Array(data); // 示例数据
@@ -52,7 +52,7 @@ function App() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${fileName}.mp3`; // 自定义文件名
+        a.download = `${fileName()}.mp3`; // 自定义文件名
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
